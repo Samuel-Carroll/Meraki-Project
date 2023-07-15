@@ -1,0 +1,35 @@
+Q: How do I set up a new page?
+A: Pages have a decorator (@route) which tells you what URL a specific function (def xyz()) is associated with. For example:
+
+    @views.route('/') <- Decorator - in this case, the root page, or no URL past the website.
+    def home():       <- function
+        pass          <- Code - in this case, a simple pass, producing a blank page.
+
+A(cont): This is done in the various pages within root/website, generally in views.py.
+
+Q: How do I set up a page, with the above information?
+A: Take a look at this snippet from views.py.
+
+@views.route('/login',methods = ['POST','GET'])
+def testLogin():
+    if request.method == 'POST':
+        user = request.form['nm']
+        print(user)
+        return redirect('/')
+    else:
+        return render_template("login.html")
+    if request.method == 'GET':
+        return render_template("login.html")
+
+A(cont) As you can see, you have to make sure that all your bases are covered. for this particular endpoint,
+    the acceptable requests are GET and POST. As such, both GET and POST must have defined uses.
+    You can see that for POST, we directly grab a variable from the HTML. Since, as of writing this, I haven't
+    used POST for this endpoint, any POST requests simply say to go back to the initial, blank, page.
+
+Q: What is 'session'? What is it for?
+A: 'session' is a tool which allows us to add data to the site cookies and then send it forward
+    across pages. you can put values in there, and then, later retrieve them without using a POST or GET
+    request.
+
+    HTML can access these variables, too, through a system called JINJA. JINJA is a sister-project of Flask,
+    and allows you to run Python-esque code blocks as a part of HTML, a-la JavaScript.
